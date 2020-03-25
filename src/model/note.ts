@@ -1,4 +1,4 @@
-import { UUID, timestamp } from '../types/types'
+import { UUID, timestamp } from '../helpers'
 
 export interface Note {
     id: UUID

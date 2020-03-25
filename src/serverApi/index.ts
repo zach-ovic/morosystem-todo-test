@@ -1,14 +1,14 @@
 import axios, { AxiosResponse } from 'axios'
 import { Note, PostNote } from '../model/note'
 import { serverEndpoint } from '../settings'
-import { UUID } from '../types/types'
+import { UUID } from '../helpers'
 
 export interface IServerApi {
   getNotes() : Promise<AxiosResponse<Note[]>>
   addNote(newNoteText: string) : Promise<AxiosResponse<Note>>
   getCompletedNotes() : Promise<AxiosResponse<Note[]>>
   editNote(noteId: UUID, newNoteText: string) : Promise<AxiosResponse<Note>>
-  deleteNote(noteId: UUID): Promise<AxiosResponse<any>>
+  removeNote(noteId: UUID): Promise<AxiosResponse<any>>
   setCompletionOnNote(noteId: UUID, complete: boolean): Promise<AxiosResponse<Note>>
 }
 
@@ -18,7 +18,7 @@ class ServerApi implements IServerApi {
   }
 
   addNote (newNoteText: string) : Promise<AxiosResponse<Note>> {
-    return axios.post<Note>(serverEndpoint + '/todos', <PostNote>{ text: newNoteText })
+    return axios.post<Note>(serverEndpoint + '/todos', { text: newNoteText } as PostNote)
   }
 
   getCompletedNotes (): Promise<AxiosResponse<Note[]>> {
@@ -26,10 +26,10 @@ class ServerApi implements IServerApi {
   }
 
   editNote (noteId: string, newNoteText: string): Promise<AxiosResponse<Note>> {
-    return axios.post<Note>(serverEndpoint + `/todos/${noteId}`, <PostNote>{ text: newNoteText })
+    return axios.post<Note>(serverEndpoint + `/todos/${noteId}`, { text: newNoteText } as PostNote)
   }
 
-  deleteNote (noteId: string): Promise<AxiosResponse<any>> {
+  removeNote (noteId: string): Promise<AxiosResponse<any>> {
     return axios.delete(serverEndpoint + `/todos/${noteId}`)
   }
 
@@ -38,5 +38,5 @@ class ServerApi implements IServerApi {
   }
 }
 
-const api = new ServerApi()
-export default api
+const serverApi = new ServerApi()
+export default serverApi

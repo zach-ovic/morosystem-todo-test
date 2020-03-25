@@ -1,21 +1,16 @@
-import { Note } from '../model/note'
-import { ThunkAction } from 'redux-thunk';
+import { NotesState } from './notes/types'
+import { ThunkAction } from 'redux-thunk'
+import { IServerApi } from '../serverApi'
+import { AsyncTasksState } from './async/types'
+import { AnyAction } from 'redux'
+import { UIState } from './ui/types'
+
+export type ApplicationThunkResult<R> = ThunkAction<R, ApplicationState, IServerApi, AnyAction>
 
 // Global application state
 export interface ApplicationState {
-    notes: Note[]
+    // Could be replaced by single array of Notes, but this is ready for scaling
+    notes: NotesState
+    async: AsyncTasksState
+    ui: UIState
 }
-
-type ThunkResult<R> = ThunkAction<R, ApplicationState, undefined, Actions>;
-
-// List of action types
-export const ADD_NOTE = 'ADD_NOTE'
-
-// Action types
-export interface AddNoteAcion {
-    type: typeof ADD_NOTE
-    payload: Note
-}
-
-export type ActionTypes =
-    AddNoteAcion

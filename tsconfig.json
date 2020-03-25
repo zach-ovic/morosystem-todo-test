@@ -18,7 +18,10 @@
     "noEmit": true,
     "jsx": "react",
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    "outDir": "out",
+    "sourceMap": true
   },
   "include": [
     "src"
